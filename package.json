@@ -1,0 +1,19 @@
+{
+  "name": "todo_app",
+  "version": "1.0.0",
+  "description": "A simple todo app",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheRayquaza/todo_app.git"
+  },
+  "author": "Mateo Lelong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheRayquaza/todo_app/issues"
+  },
+  "homepage": "https://github.com/TheRayquaza/todo_app#readme"
+}
