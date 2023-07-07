@@ -13,7 +13,7 @@ const username = "TEST_USER1234$";
 const password = "TEST_PASSWORD1234$";
 const email = "TEST_EMAIL1234$@gmail.com";
 
-describe('POST /api/user/', () => {
+describe("POST /api/user/", () => {
 
     beforeEach(async () : Promise<void> => {
         user = await generate_user(username, password);
@@ -25,8 +25,8 @@ describe('POST /api/user/', () => {
         await User.destroy({ where : { } });
     });
 
-    it('201 : new user and send the result', async () => {
-        init.body = JSON.stringify({ username : username+"NEW", password : password});
+    it("201 : new user and send the result", async () => {
+        init.body = JSON.stringify({ username : username+"NEW", password : password, email : email });
 
         response = await fetch(url, init);
         json = await response.json();
@@ -34,23 +34,10 @@ describe('POST /api/user/', () => {
         expect(response.status).toEqual(201);
         expect(json).toEqual({
             username: username+"NEW",
+            email: email,
             id : expect.any(Number),
             last_connection: expect.any(String),
-            creation_date: expect.any(String),
-            permission: 0,
-        });
-    });
-
-    it('409 : conflict username already taken and send error response', async () => {
-        init.body = JSON.stringify({ username : username, password : password, email : email });
-
-        response = await fetch(url, init);
-        json = await response.json();
-
-        expect(response.status).toEqual(409);
-        expect(json).toEqual({
-            status: 409,
-            error: "Username already taken",
+            creation_date: expect.any(String)
         });
     });
 

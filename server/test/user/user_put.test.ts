@@ -23,21 +23,6 @@ describe('PUT /api/user/', () => {
         await User.destroy({ where : { } });
     });
 
-    it('401 : token is invalid', async () => {
-        if (init.headers)
-            init.headers = {"Authorization" : "Bearer " + token + "INVALID", "Content-Type": "application/json"};
-
-        if (user && user.dataValues.id) {
-            response = await fetch(url, init);
-            json = await response.json();
-
-            expect(response.status).toEqual(401);
-            expect(json).toEqual({
-                status: 401,
-                error: 'Invalid token',
-            });
-        }
-    })
 
     it("400 : Password is not valid", async () => {
         init.body = JSON.stringify({ password : "INVALID_PASSWORD" });

@@ -29,10 +29,7 @@ export const get_tasks = async (req: Request, res: Response) => {
 
     try {
         const tasks: Task[] = await Task.findAll({ where : { user_id: user_id }});
-        if (tasks.length === 0)
-            send_error(res, 404, "No task not found");
-        else
-            send_result(res, 200, tasks);
+        send_result(res, 200, tasks);
     } catch (err) {
         middleware_logger.error(err);
         send_error(res, 500, "Server error");

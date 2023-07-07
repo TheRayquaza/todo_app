@@ -8,7 +8,7 @@ let url : RequestInfo = "http://localhost:8080/api/task/";
 let response : Response;
 let json : any;
 let user : User;
-let tasks : Task[];
+let tasks : Task[] = [];
 let token : string;
 
 const username = "TEST_USER1234$";
@@ -65,6 +65,7 @@ describe("GET /api/task", () => {
 
     describe("/", () => {
         it('200 : retrieve all tasks of a user', async () => {
+            url = "http://localhost:8080/api/task/";
             response = await fetch(url, init);
             json = await response.json();
 
@@ -83,7 +84,7 @@ describe("GET /api/task", () => {
 
         it('401 : wrong token', async () => {
             init = { method: "GET", headers: { "Content-Type": "application/json", "Authorization" : "Bearer FAKE"}};
-
+            url = "http://localhost:8080/api/task/";
             response = await fetch(url, init);
             json = await response.json();
 

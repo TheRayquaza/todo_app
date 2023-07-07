@@ -12,6 +12,24 @@ describe("POST /register/", () => {
         await User.destroy({ where : { } });
     });
 
+    it("201 : create a new user and return a token", async () => {
+        const username = "TEST_USER1234$";
+        const password = "TEST_PASSWORD1234$";
+        const email = "TEST_USER1234$@gmail.com";
+
+        init.body = JSON.stringify({ username : username, password : password, email : email });
+
+        response = await fetch(url, init);
+        json = await response.json();
+
+        expect(response.status).toEqual(201);
+        expect(json).toEqual({
+            token: expect.any(String),
+            username: username,
+            id: expect.any(Number),
+        });
+    });
+
     it("400 : username or password are missing", async () => {
         init.body = JSON.stringify({});
 
@@ -80,23 +98,6 @@ describe("POST /register/", () => {
         expect(json).toEqual({
             error: "User already exists",
             status : 409
-        });
-    });
-
-    it("201 : create a new user and return a token", async () => {
-        const username = "TEST_USER1234$";
-        const password = "TEST_PASSWORD1234$";
-
-        init.body = JSON.stringify({ username : username, password : password});
-
-        response = await fetch(url, init);
-        json = await response.json();
-
-        expect(response.status).toEqual(201);
-        expect(json).toEqual({
-            token: expect.any(String),
-            username: username,
-            id: expect.any(Number),
         });
     });
 });

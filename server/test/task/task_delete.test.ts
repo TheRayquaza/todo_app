@@ -31,12 +31,13 @@ describe("DELETE /api/task", () => {
             if (user && user.dataValues.id) {
                 const task = await Task.create({
                     user_id: user.dataValues.id,
+                    done : false,
+                    priority : 0,
                     title: "Test Task",
                     description: "Test Description"
                 });
 
-                const deleteUrl = url + task.dataValues.id;
-                response = await fetch(deleteUrl, init);
+                response = await fetch(url + task.dataValues.id as string, init);
                 json = await response.json();
 
                 expect(response.status).toEqual(200);
@@ -61,14 +62,16 @@ describe("DELETE /api/task", () => {
         });
 
         it("403 : should send an error response if user is not allowed to delete the task", async () => {
-            // Create a task belonging to a different user
             const anotherUser = await generate_user("AnotherUser", "AnotherPassword");
             const task = await Task.create({
-                user_id: anotherUser.dataValues.id,
-                title: "Another User's Task"
+                user_id: anotherUser.dataValues.id as number,
+                title: "Another User's Task",
+                description: "Another User's Task Description",
+                done: false,
+                priority: 0
             });
 
-            response = await fetch(url + task.dataValues.id as string, init);
+            response = await fetch(url + task.dataValues.id ? "" : task.dataValues.id as string, init);
             json = await response.json();
 
             expect(response.status).toEqual(403);

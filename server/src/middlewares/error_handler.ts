@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 export const error_handler = (err: any, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof SyntaxError && "body" in err)
-        res.status(400).json({ error: "Invalid JSON" });
+        res.status(400).json({ error: "Invalid JSON", status : 400 });
     else
-        res.status(500).json({ error: err.message || "Internal Server Error" });
+        res.status(500).json({ error: err.message || "Internal Server Error", status : 500});
 };

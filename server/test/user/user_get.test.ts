@@ -24,23 +24,21 @@ describe("GET /api/user", () => {
         await User.destroy({ where : { } });
     });
 
-    it('200 : retrieve user info', async () => {
+    it("200 : retrieve user info", async () => {
         response = await fetch(url, init);
         json = await response.json();
 
         expect(response.status).toEqual(200);
-        expect(json).toEqual(expect.arrayContaining([
-            expect.objectContaining({
-                id: expect.any(Number),
-                username: expect.any(String),
-                email: expect.any(String),
-                last_connection: expect.any(String),
-                creation_date: expect.any(String)
-            }),
-        ]));
+        expect(json).toEqual({
+            id: expect.any(Number),
+            username: expect.any(String),
+            email: expect.any(String),
+            last_connection: expect.any(String),
+            creation_date: expect.any(String)
+        });
     });
 
-    it('401 : wrong token', async () => {
+    it("401 : wrong token", async () => {
         init = { method: "GET", headers: { "Content-Type": "application/json", "Authorization" : "Bearer FAKE"}};
 
         response = await fetch(url, init);
@@ -49,7 +47,7 @@ describe("GET /api/user", () => {
         expect(response.status).toEqual(401);
         expect(json).toEqual({
             status: 401,
-            error: "Unauthorized"
+            error: "Invalid token"
         });
     });
 

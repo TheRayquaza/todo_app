@@ -10,10 +10,10 @@ if (process.env.LOG !== "true")
 const app = express();
 
 sequelize.authenticate()
-    .then(() => console.log("Connection to db has been established successfully on port " + process.env.DB_PORT + "!"))
+    .then(() => console.log("Connection to db has been established successfully"))
     .catch((err) => console.error("Unable to connect to the database:", err));
 
-sequelize.sync({ force : true });
+sequelize.sync({ force : process.env.RELOAD_DB === "true" });
 
 // Main route
 app.use(router);
