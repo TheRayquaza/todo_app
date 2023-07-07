@@ -1,5 +1,5 @@
 import { Box, Checkbox, Flex, IconButton, Spacer, Tooltip } from "@chakra-ui/react";
-import { EditIcon, CloseIcon, CheckIcon } from "@chakra-ui/icons";
+import { EditIcon, CloseIcon } from "@chakra-ui/icons";
 import { Dispatch, SetStateAction, useContext } from "react";
 import { toast } from "react-toastify";
 
@@ -9,7 +9,7 @@ import { UserContext } from "../context/UserContext.tsx";
 
 type TaskProps = {
     task: task;
-    setTaskToEdit: Dispatch<SetStateAction<task>>;
+    setTaskToEdit: Dispatch<SetStateAction<task | null>>;
     setOpenTaskEditDialog: Dispatch<SetStateAction<boolean>>;
 };
 
@@ -38,12 +38,16 @@ const Task = (props: TaskProps) => {
     };
 
     const handleDeleteClick = async () => {
-        const json = await send_request(`/api/task/${task.id}`, "DELETE", {
+        const json = await send_request(
+            `/api/task/${task.id}`,
+            "DELETE",
+            {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
         });
 
-        if (json.error) toast.error(json.error);
+        if (json.error) 
+            toast.error(json.error);
         else {
             toast.success("Task deleted");
             setTasks((prevTasks) => prevTasks.filter((t) => t.id !== task.id));
@@ -62,14 +66,6 @@ const Task = (props: TaskProps) => {
                 {task.title}
             </Box>
             <Spacer />
-            <Tooltip label={task.done ? "Mark as not done" : "Mark as done"} hasArrow placement="top">
-                <IconButton
-                    colorScheme="green"
-                    aria-label={task.done ? "Mark as not done" : "Mark as done"}
-                    icon={<CheckIcon />}
-                    onClick={handleCheckClick}
-                />
-            </Tooltip>
             <Tooltip label="Edit" hasArrow placement="top">
                 <IconButton
                     icon={<EditIcon />}

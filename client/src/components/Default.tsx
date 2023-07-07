@@ -10,7 +10,7 @@ const Default = () => {
             setToken(localStorage.getItem("token") as string);
             setLoggedIn(true);
             setUsername(localStorage.getItem("username") as string);
-            setId(localStorage.getItem("id") as number);
+            setId(parseInt(localStorage.getItem("id") as string));
         }
         document.title = 'Home';
     }, []);

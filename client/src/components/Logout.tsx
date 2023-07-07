@@ -10,7 +10,7 @@ type LogoutProps = {
 
 const Logout = (props: LogoutProps) => {
     const navigate = useNavigate();
-    const { setLoggedIn, username, id } = useContext(UserContext);
+    const { setLoggedIn } = useContext(UserContext);
     const { open, setOpen } = props;
 
     const handleNo = () => { setOpen(false) };

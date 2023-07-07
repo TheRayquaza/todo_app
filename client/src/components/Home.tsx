@@ -2,13 +2,16 @@ import { Center, Container, Divider, IconButton, Stack } from "@chakra-ui/react"
 import { AddIcon, DeleteIcon, RepeatIcon } from "@chakra-ui/icons";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 import task from "../type/task.ts"
 import { send_request } from "../scripts/request.ts"
 import Tasks from "./Tasks.tsx";
 import { UserContext } from "../context/UserContext.tsx";
 import AddTaskDialog from "./dialog/AddTaskDialog.tsx";
-import { useNavigate } from "react-router";
+import EditTaskDialog from "./dialog/EditTaskDialog.tsx";
+
+
 
 const Home = () => {
     const { token, setTasks, loggedIn } = useContext(UserContext);
@@ -21,7 +24,7 @@ const Home = () => {
         document.title = "My Tasks";
     }, [loggedIn, navigate]);
 
-    const [taskToEdit, setTaskToEdit] = useState<task>();
+    const [taskToEdit, setTaskToEdit] = useState<task | null>(null);
     const [openTaskEditDialog, setOpenTaskEditDialog] = useState<boolean>(false);
     const [openTaskAddDialog, setOpenAddEditDialog] = useState<boolean>(false);
 
@@ -85,7 +88,7 @@ const Home = () => {
                 <Tasks setTaskToEdit={setTaskToEdit} setOpenTaskEditDialog={setOpenTaskEditDialog} />
 
             </Container>
-
+            <EditTaskDialog open={openTaskEditDialog} setOpen={setOpenTaskEditDialog} task={taskToEdit} />
             <AddTaskDialog open={openTaskAddDialog} setOpen={setOpenAddEditDialog} />
         </Center>
     );

@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserContext.tsx";
 import Task from "./Task.tsx";
 
 type TasksProps = {
-    setTaskToEdit : Dispatch<SetStateAction<task>>,
+    setTaskToEdit : Dispatch<SetStateAction<task | null>>,
     setOpenTaskEditDialog : Dispatch<SetStateAction<boolean>>
 }
 

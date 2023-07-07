@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
 
 import Default from './components/Default.tsx';
@@ -30,7 +29,7 @@ const App = () => {
                     <Route path="/register" element={<Register />} />
                     <Route path="/logout" element={<Logout open={logoutOpen} setOpen={setLogoutOpen} />} />
                     <Route path="/home" element={<Home />} />
-                    <Route path="*" element={<Default />} />
+                    <Route path="*" element={<InvalidPage />} />
                 </Routes>
                 <Footer />
             </UserProvider>
